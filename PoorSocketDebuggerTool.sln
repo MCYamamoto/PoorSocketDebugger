@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoorSocketDebuggerTool", "PoorSocketDebuggerTool\PoorSocketDebuggerTool.csproj", "{437AF8C5-3A18-49AC-A6FA-924E47E89B9E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{437AF8C5-3A18-49AC-A6FA-924E47E89B9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{437AF8C5-3A18-49AC-A6FA-924E47E89B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{437AF8C5-3A18-49AC-A6FA-924E47E89B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{437AF8C5-3A18-49AC-A6FA-924E47E89B9E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F960CE28-E72D-4381-8880-50083D7B7785}
+	EndGlobalSection
+EndGlobal
