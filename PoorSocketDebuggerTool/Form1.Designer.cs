@@ -28,86 +28,95 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.components = new System.ComponentModel.Container();
+            this.buttonConnect = new System.Windows.Forms.Button();
+            this.buttonSend = new System.Windows.Forms.Button();
+            this.buttonDisconnect = new System.Windows.Forms.Button();
+            this.textBoxSrcIp = new System.Windows.Forms.TextBox();
+            this.textBoxSrcPort = new System.Windows.Forms.TextBox();
+            this.textBoxDstIp = new System.Windows.Forms.TextBox();
+            this.textBoxDstPort = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxType = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBoxData = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.checkBoxReconnect = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBoxReconnectTime = new System.Windows.Forms.TextBox();
+            this.checkBoxReSend = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.timerReconnect = new System.Windows.Forms.Timer(this.components);
+            this.timerResend = new System.Windows.Forms.Timer(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // button1
+            // buttonConnect
             // 
-            this.button1.Location = new System.Drawing.Point(292, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(143, 49);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "接続";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonConnect.Location = new System.Drawing.Point(292, 12);
+            this.buttonConnect.Name = "buttonConnect";
+            this.buttonConnect.Size = new System.Drawing.Size(143, 49);
+            this.buttonConnect.TabIndex = 0;
+            this.buttonConnect.Text = "接続";
+            this.buttonConnect.UseVisualStyleBackColor = true;
+            this.buttonConnect.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // buttonSend
             // 
-            this.button2.Location = new System.Drawing.Point(726, 53);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(141, 49);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "送信";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonSend.Location = new System.Drawing.Point(726, 53);
+            this.buttonSend.Name = "buttonSend";
+            this.buttonSend.Size = new System.Drawing.Size(141, 49);
+            this.buttonSend.TabIndex = 1;
+            this.buttonSend.Text = "送信";
+            this.buttonSend.UseVisualStyleBackColor = true;
+            this.buttonSend.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // buttonDisconnect
             // 
-            this.button3.Location = new System.Drawing.Point(292, 72);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(143, 48);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "切断";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.buttonDisconnect.Location = new System.Drawing.Point(292, 72);
+            this.buttonDisconnect.Name = "buttonDisconnect";
+            this.buttonDisconnect.Size = new System.Drawing.Size(143, 48);
+            this.buttonDisconnect.TabIndex = 2;
+            this.buttonDisconnect.Text = "切断";
+            this.buttonDisconnect.UseVisualStyleBackColor = true;
+            this.buttonDisconnect.Click += new System.EventHandler(this.button3_Click);
             // 
-            // textBox1
+            // textBoxSrcIp
             // 
-            this.textBox1.Location = new System.Drawing.Point(124, 41);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(141, 22);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Text = "192.168.1.1";
+            this.textBoxSrcIp.Location = new System.Drawing.Point(124, 41);
+            this.textBoxSrcIp.Name = "textBoxSrcIp";
+            this.textBoxSrcIp.Size = new System.Drawing.Size(141, 22);
+            this.textBoxSrcIp.TabIndex = 3;
+            this.textBoxSrcIp.Text = "192.168.1.1";
             // 
-            // textBox2
+            // textBoxSrcPort
             // 
-            this.textBox2.Location = new System.Drawing.Point(124, 69);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(141, 22);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.Text = "50000";
+            this.textBoxSrcPort.Location = new System.Drawing.Point(124, 69);
+            this.textBoxSrcPort.Name = "textBoxSrcPort";
+            this.textBoxSrcPort.Size = new System.Drawing.Size(141, 22);
+            this.textBoxSrcPort.TabIndex = 4;
+            this.textBoxSrcPort.Text = "50000";
             // 
-            // textBox3
+            // textBoxDstIp
             // 
-            this.textBox3.Location = new System.Drawing.Point(124, 97);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(141, 22);
-            this.textBox3.TabIndex = 5;
-            this.textBox3.Text = "192.168.1.2";
+            this.textBoxDstIp.Location = new System.Drawing.Point(124, 97);
+            this.textBoxDstIp.Name = "textBoxDstIp";
+            this.textBoxDstIp.Size = new System.Drawing.Size(141, 22);
+            this.textBoxDstIp.TabIndex = 5;
+            this.textBoxDstIp.Text = "192.168.1.2";
             // 
-            // textBox4
+            // textBoxDstPort
             // 
-            this.textBox4.Location = new System.Drawing.Point(124, 125);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(141, 22);
-            this.textBox4.TabIndex = 6;
-            this.textBox4.Text = "60000";
+            this.textBoxDstPort.Location = new System.Drawing.Point(124, 125);
+            this.textBoxDstPort.Name = "textBoxDstPort";
+            this.textBoxDstPort.Size = new System.Drawing.Size(141, 22);
+            this.textBoxDstPort.TabIndex = 6;
+            this.textBoxDstPort.Text = "60000";
             // 
             // label1
             // 
@@ -146,14 +155,14 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "送信先IP";
             // 
-            // comboBox1
+            // comboBoxType
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(124, 13);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(141, 23);
-            this.comboBox1.TabIndex = 11;
-            this.comboBox1.Text = "TCPクライアント";
+            this.comboBoxType.FormattingEnabled = true;
+            this.comboBoxType.Location = new System.Drawing.Point(124, 13);
+            this.comboBoxType.Name = "comboBoxType";
+            this.comboBoxType.Size = new System.Drawing.Size(141, 23);
+            this.comboBoxType.TabIndex = 11;
+            this.comboBoxType.Text = "TCPクライアント";
             // 
             // label5
             // 
@@ -164,13 +173,13 @@
             this.label5.TabIndex = 12;
             this.label5.Text = "種別";
             // 
-            // textBox5
+            // textBoxData
             // 
-            this.textBox5.Location = new System.Drawing.Point(457, 22);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(348, 22);
-            this.textBox5.TabIndex = 13;
-            this.textBox5.Text = "c:\\test.bin";
+            this.textBoxData.Location = new System.Drawing.Point(457, 22);
+            this.textBoxData.Name = "textBoxData";
+            this.textBoxData.Size = new System.Drawing.Size(348, 22);
+            this.textBoxData.TabIndex = 13;
+            this.textBoxData.Text = "c:\\test.bin";
             // 
             // label6
             // 
@@ -195,35 +204,104 @@
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(15, 168);
+            this.listBox1.Location = new System.Drawing.Point(15, 228);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(994, 334);
+            this.listBox1.Size = new System.Drawing.Size(994, 274);
             this.listBox1.TabIndex = 16;
+            // 
+            // checkBoxReconnect
+            // 
+            this.checkBoxReconnect.AutoSize = true;
+            this.checkBoxReconnect.Location = new System.Drawing.Point(15, 165);
+            this.checkBoxReconnect.Name = "checkBoxReconnect";
+            this.checkBoxReconnect.Size = new System.Drawing.Size(104, 19);
+            this.checkBoxReconnect.TabIndex = 17;
+            this.checkBoxReconnect.Text = "再接続有無";
+            this.checkBoxReconnect.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 197);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(110, 15);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "再接続時間(ms)";
+            // 
+            // textBoxReconnectTime
+            // 
+            this.textBoxReconnectTime.Location = new System.Drawing.Point(128, 194);
+            this.textBoxReconnectTime.Name = "textBoxReconnectTime";
+            this.textBoxReconnectTime.Size = new System.Drawing.Size(141, 22);
+            this.textBoxReconnectTime.TabIndex = 19;
+            this.textBoxReconnectTime.Text = "1000";
+            // 
+            // checkBoxReSend
+            // 
+            this.checkBoxReSend.AutoSize = true;
+            this.checkBoxReSend.Location = new System.Drawing.Point(292, 165);
+            this.checkBoxReSend.Name = "checkBoxReSend";
+            this.checkBoxReSend.Size = new System.Drawing.Size(119, 19);
+            this.checkBoxReSend.TabIndex = 20;
+            this.checkBoxReSend.Text = "連続送信有無";
+            this.checkBoxReSend.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(289, 197);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(110, 15);
+            this.label8.TabIndex = 21;
+            this.label8.Text = "再送信時間(ms)";
+            // 
+            // timerReconnect
+            // 
+            this.timerReconnect.Tick += new System.EventHandler(this.timerReconnect_Tick);
+            // 
+            // timerResend
+            // 
+            this.timerResend.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(405, 194);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(121, 22);
+            this.textBox1.TabIndex = 24;
+            this.textBox1.Text = "1000";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 521);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.checkBoxReSend);
+            this.Controls.Add(this.textBoxReconnectTime);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.checkBoxReconnect);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.textBoxData);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.comboBoxType);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.textBoxDstPort);
+            this.Controls.Add(this.textBoxDstIp);
+            this.Controls.Add(this.textBoxSrcPort);
+            this.Controls.Add(this.textBoxSrcIp);
+            this.Controls.Add(this.buttonDisconnect);
+            this.Controls.Add(this.buttonSend);
+            this.Controls.Add(this.buttonConnect);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,23 +309,31 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button buttonConnect;
+        private System.Windows.Forms.Button buttonSend;
+        private System.Windows.Forms.Button buttonDisconnect;
+        private System.Windows.Forms.TextBox textBoxSrcIp;
+        private System.Windows.Forms.TextBox textBoxSrcPort;
+        private System.Windows.Forms.TextBox textBoxDstIp;
+        private System.Windows.Forms.TextBox textBoxDstPort;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxType;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBoxData;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.CheckBox checkBoxReconnect;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBoxReconnectTime;
+        private System.Windows.Forms.CheckBox checkBoxReSend;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Timer timerReconnect;
+        private System.Windows.Forms.Timer timerResend;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

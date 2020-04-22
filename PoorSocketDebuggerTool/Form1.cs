@@ -28,8 +28,8 @@ namespace PoorSocketDebuggerTool
         public Form1()
         {
             InitializeComponent();
-            button2.Enabled = false;
-            button3.Enabled = false;
+            buttonSend.Enabled = false;
+            buttonDisconnect.Enabled = false;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -39,14 +39,18 @@ namespace PoorSocketDebuggerTool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string strSrcIP = textBox1.Text;
-            int sSrcPort = Int32.Parse(textBox2.Text);
-            string strDstIP = textBox3.Text;
-            int sDstPort = Int32.Parse(textBox4.Text);
+            m_ActiveRecv = true;
+            timerReconnect.Enabled = false;
+
+            string strSrcIP = textBoxSrcIp.Text;
+            int sSrcPort = Int32.Parse(textBoxSrcPort.Text);
+            string strDstIP = textBoxDstIp.Text;
+            int sDstPort = Int32.Parse(textBoxDstPort.Text);
 
             try
             {
                 localSocket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+                localSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
                 var local = new System.Net.IPEndPoint(IPAddress.Parse(strSrcIP), sSrcPort);
                 localSocket.Bind(local);
 
@@ -74,21 +78,34 @@ namespace PoorSocketDebuggerTool
                             //データの一部を受信する
                             resSize = m_ns.Read(resBytes, 0, resBytes.Length);
                             //Readが0を返した時はサーバーが切断したと判断
-                            if (resSize == 0)
+                            if (resSize != 0)
                             {
-                                listBox1.Items.Add("サーバ切断");
+                                //受信したデータを蓄積する
+                                ms.Write(resBytes, 0, resSize);
+                                //まだ読み取れるデータがあるか、データの最後が\nでない時は、
+                                // 受信を続ける
+                                Invoke(new ListAddDelegate(OutputLogRecv));
+                            }
+                            else
+                            {
+                                //切断
                                 break;
                             }
-                            //受信したデータを蓄積する
-                            ms.Write(resBytes, 0, resSize);
-                            //まだ読み取れるデータがあるか、データの最後が\nでない時は、
-                            // 受信を続ける
-                            Invoke(new ListAddDelegate(OutputLog));
 
                         }
-                        catch (Exception)
+                        catch (ArgumentNullException e1)
                         {
-
+                        }
+                        catch (ArgumentOutOfRangeException e2)
+                        {
+                        }
+                        catch (InvalidOperationException e3)
+                        {
+                            //切断
+                            break;
+                        }
+                        catch (IOException e4)
+                        {
                         }
                     } while (m_ActiveRecv);
                     //受信したデータを文字列に変換
@@ -99,13 +116,27 @@ namespace PoorSocketDebuggerTool
                     m_tcp = null;
                     localSocket.Close();
                     localSocket = null;
+                    try
+                    {
+                        Invoke(new ListAddDelegate(ErrDiscconect));
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }));
 
                 m_thread.Start();
 
-                button1.Enabled = false;
-                button2.Enabled = true;
-                button3.Enabled = true;
+                buttonConnect.Enabled = false;
+                buttonSend.Enabled = true;
+                buttonDisconnect.Enabled = true;
+
+                //連続送信する場合タイマきどう
+                if(checkBoxReSend.Checked == true)
+                {
+                    timerResend.Interval = Int32.Parse(textBox1.Text);
+                    timerResend.Enabled = true;
+                }
             }
             catch (Exception)
             {
@@ -123,42 +154,83 @@ namespace PoorSocketDebuggerTool
                     localSocket.Close();
                 }
             }
+            //再接続時間が設定されている場合、再接続
+            if (checkBoxReconnect.Checked)
+            {
+                timerReconnect.Interval = Int32.Parse(textBoxReconnectTime.Text);
+                timerReconnect.Enabled = true;
+
+                buttonConnect.Enabled = false;
+                buttonDisconnect.Enabled = true;
+            }
         }
 
-        private void OutputLog()
+        private void OutputLogRecv()
         {
             listBox1.Items.Add("受信");
+        }
+        private void ErrDiscconect()
+        {
+            listBox1.Items.Add("切断");
+            if (checkBoxReconnect.Checked)
+            {
+                //再接続時間が設定されている場合、再接続するので、接続ボタン押下維持
+                m_ActiveRecv = false;
+                buttonSend.Enabled = false;
+                timerResend.Enabled = false;
+            }
+            else
+            {
+                Disconnect();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FileStream fs = new FileStream(textBox5.Text, FileMode.Open, FileAccess.Read);
-
-            int fileSize = (int)fs.Length; // ファイルのサイズ
-            byte[] buf = new byte[fileSize]; // データ格納用配列
-
-            int readSize; // Readメソッドで読み込んだバイト数
-            int remain = fileSize; // 読み込むべき残りのバイト数
-            int bufPos = 0; // データ格納用配列内の追加位置
-
-            while (remain > 0)
+            try
             {
-                // 1024Bytesずつ読み込む
-                readSize = fs.Read(buf, bufPos, Math.Min(1024, remain));
 
-                bufPos += readSize;
-                remain -= readSize;
+                FileStream fs = new FileStream(textBoxData.Text, FileMode.Open, FileAccess.Read);
+
+                int fileSize = (int)fs.Length; // ファイルのサイズ
+                byte[] buf = new byte[fileSize]; // データ格納用配列
+
+                int readSize; // Readメソッドで読み込んだバイト数
+                int remain = fileSize; // 読み込むべき残りのバイト数
+                int bufPos = 0; // データ格納用配列内の追加位置
+
+                while (remain > 0)
+                {
+                    // 1024Bytesずつ読み込む
+                    readSize = fs.Read(buf, bufPos, Math.Min(1024, remain));
+
+                    bufPos += readSize;
+                    remain -= readSize;
+                }
+                fs.Dispose();
+                m_ns.Write(buf, 0, fileSize);
+                listBox1.Items.Add("送信成功");
             }
-            fs.Dispose();
-            m_ns.Write(buf, 0, fileSize);
+            catch (Exception)
+            {
+                listBox1.Items.Add("送信失敗");
+            }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        void Disconnect()
         {
             m_ActiveRecv = false;
-            button1.Enabled = true;
-            button2.Enabled = false;
-            button3.Enabled = false;
+
+            buttonConnect.Enabled = true;
+            buttonSend.Enabled = false;
+            buttonDisconnect.Enabled = false;
+
+            timerResend.Enabled = false;
+        }
+        private void button3_Click(object sender, EventArgs e)
+        {
+            timerReconnect.Enabled = false;
+            Disconnect();
             listBox1.Items.Add("切断");
         }
 
@@ -173,8 +245,40 @@ namespace PoorSocketDebuggerTool
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 //OKボタンがクリックされたとき、選択されたファイル名を表示する
-                textBox5.Text = ofd.FileName;
+                textBoxData.Text = ofd.FileName;
             }
+        }
+
+        private void timerReconnect_Tick(object sender, EventArgs e)
+        {
+            if (m_thread == null)
+            {
+                //接続
+                button1_Click(sender, e);
+            }
+            else
+            {
+                if (m_thread.IsAlive == false)
+                {
+                    //接続
+                    button1_Click(sender, e);
+                }
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            button2_Click(sender, e);
+        }
+
+        private void textBoxReSendTime_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            button3_Click(sender, e);
         }
     }
 }
