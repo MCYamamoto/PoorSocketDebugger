@@ -1,0 +1,9 @@
+C:\work\Kazuki\company\mss\試験自動化\Tool\git\PoorSocketDebugger\PoorSocketDebuggerTool\bin\Release\PoorSocketDebuggerTool.exe.config
+C:\work\Kazuki\company\mss\試験自動化\Tool\git\PoorSocketDebugger\PoorSocketDebuggerTool\bin\Release\PoorSocketDebuggerTool.exe
+C:\work\Kazuki\company\mss\試験自動化\Tool\git\PoorSocketDebugger\PoorSocketDebuggerTool\bin\Release\PoorSocketDebuggerTool.pdb
+C:\work\Kazuki\company\mss\試験自動化\Tool\git\PoorSocketDebugger\PoorSocketDebuggerTool\obj\Release\PoorSocketDebuggerTool.Form1.resources
+C:\work\Kazuki\company\mss\試験自動化\Tool\git\PoorSocketDebugger\PoorSocketDebuggerTool\obj\Release\PoorSocketDebuggerTool.Properties.Resources.resources
+C:\work\Kazuki\company\mss\試験自動化\Tool\git\PoorSocketDebugger\PoorSocketDebuggerTool\obj\Release\PoorSocketDebuggerTool.csproj.GenerateResource.cache
+C:\work\Kazuki\company\mss\試験自動化\Tool\git\PoorSocketDebugger\PoorSocketDebuggerTool\obj\Release\PoorSocketDebuggerTool.csproj.CoreCompileInputs.cache
+C:\work\Kazuki\company\mss\試験自動化\Tool\git\PoorSocketDebugger\PoorSocketDebuggerTool\obj\Release\PoorSocketDebuggerTool.exe
+C:\work\Kazuki\company\mss\試験自動化\Tool\git\PoorSocketDebugger\PoorSocketDebuggerTool\obj\Release\PoorSocketDebuggerTool.pdb

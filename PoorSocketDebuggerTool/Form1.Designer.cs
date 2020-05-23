@@ -157,12 +157,16 @@
             // 
             // comboBoxType
             // 
+            this.comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxType.FormattingEnabled = true;
+            this.comboBoxType.Items.AddRange(new object[] {
+            "TCPクライアント",
+            "TCPサーバ",
+            "UDP"});
             this.comboBoxType.Location = new System.Drawing.Point(124, 13);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(141, 23);
             this.comboBoxType.TabIndex = 11;
-            this.comboBoxType.Text = "TCPクライアント";
             // 
             // label5
             // 
