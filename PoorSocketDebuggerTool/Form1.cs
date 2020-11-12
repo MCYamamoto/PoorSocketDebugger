@@ -11,6 +11,7 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Net;
 using System.IO;
+using System.Configuration;
 
 namespace PoorSocketDebuggerTool
 {
@@ -31,6 +32,7 @@ namespace PoorSocketDebuggerTool
         bool m_ActiveRecv = true;
 
         delegate void ListAddDelegate();
+        delegate void ListAddDelegateUdpRecv(byte[] msg);
 
         public Form1()
         {
@@ -38,6 +40,13 @@ namespace PoorSocketDebuggerTool
             buttonSend.Enabled = false;
             buttonDisconnect.Enabled = false;
             comboBoxType.SelectedIndex = 0;
+            //設定ファイル読み込み
+            comboBoxType.SelectedIndex = Int32.Parse(System.Configuration.ConfigurationManager.AppSettings["protocol"]);
+            textBoxSrcIp.Text = System.Configuration.ConfigurationManager.AppSettings["srcip"];
+            textBoxSrcPort.Text = System.Configuration.ConfigurationManager.AppSettings["srcport"];
+            textBoxDstIp.Text = System.Configuration.ConfigurationManager.AppSettings["dstip"];
+            textBoxDstPort.Text = System.Configuration.ConfigurationManager.AppSettings["dstport"];
+            textBoxData.Text = System.Configuration.ConfigurationManager.AppSettings["senddatapath"];
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -401,6 +410,7 @@ namespace PoorSocketDebuggerTool
                             //データを受信する
                             System.Net.IPEndPoint remoteEP = null;
                             byte[] rcvBytes = m_udp.Receive(ref remoteEP);
+                            Invoke(new ListAddDelegateUdpRecv(OutputLogRecvUdp),rcvBytes);
                         }
                         catch (Exception)
                         {
@@ -479,6 +489,12 @@ namespace PoorSocketDebuggerTool
 //            listBox1.Items.Add("受信");
         }
 
+        private void OutputLogRecvUdp(byte[] msg)
+        {
+            string text = System.Text.Encoding.UTF8.GetString(msg);
+            listBox1.Items.Add(text);
+        }
+
         private void SendStart()
         {
             buttonSend.Enabled = true;
@@ -512,49 +528,54 @@ namespace PoorSocketDebuggerTool
         {
             try
             {
+                string[] sendfiles = textBoxData.Text.ToString().Split(',');
 
-                FileStream fs = new FileStream(textBoxData.Text, FileMode.Open, FileAccess.Read);
-
-                int fileSize = (int)fs.Length; // ファイルのサイズ
-                byte[] buf = new byte[fileSize]; // データ格納用配列
-
-                int readSize; // Readメソッドで読み込んだバイト数
-                int remain = fileSize; // 読み込むべき残りのバイト数
-                int bufPos = 0; // データ格納用配列内の追加位置
-
-                while (remain > 0)
+                foreach(string filename in sendfiles)
                 {
-                    // 1024Bytesずつ読み込む
-                    readSize = fs.Read(buf, bufPos, Math.Min(1024, remain));
+                    FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
 
-                    bufPos += readSize;
-                    remain -= readSize;
-                }
-                fs.Dispose();
-                if (comboBoxType.SelectedIndex == 0)
-                {
-                    m_ns.Write(buf, 0, fileSize);
-                }
-                else if (comboBoxType.SelectedIndex == 1)
-                {
-                    if (state != null)
+                    int fileSize = (int)fs.Length; // ファイルのサイズ
+                    byte[] buf = new byte[fileSize]; // データ格納用配列
+
+                    int readSize; // Readメソッドで読み込んだバイト数
+                    int remain = fileSize; // 読み込むべき残りのバイト数
+                    int bufPos = 0; // データ格納用配列内の追加位置
+
+                    while (remain > 0)
                     {
-                        if (state.workSocket != null)
-                        {
+                        // 1024Bytesずつ読み込む
+                        readSize = fs.Read(buf, bufPos, Math.Min(1024, remain));
 
-                            TcpServerSend(state.workSocket, buf);
+                        bufPos += readSize;
+                        remain -= readSize;
+                    }
+                    fs.Dispose();
+                    if (comboBoxType.SelectedIndex == 0)
+                    {
+                        m_ns.Write(buf, 0, fileSize);
+                    }
+                    else if (comboBoxType.SelectedIndex == 1)
+                    {
+                        if (state != null)
+                        {
+                            if (state.workSocket != null)
+                            {
+
+                                TcpServerSend(state.workSocket, buf);
+                            }
+                        }
+                    }
+                    else if (comboBoxType.SelectedIndex == 2)
+                    {
+                        if (m_udp != null)
+                        {
+                            UdpSend(buf);
                         }
                     }
                 }
-                else if (comboBoxType.SelectedIndex == 2)
-                {
-                    if(m_udp != null)
-                    {
-                        UdpSend(buf);
-                    }
-                }
+
                     //                listBox1.Items.Add("送信成功");
-                }
+            }
             catch (Exception)
             {
 //                listBox1.Items.Add("送信失敗");
@@ -606,11 +627,29 @@ namespace PoorSocketDebuggerTool
 
             //タイトルを設定する
             ofd.Title = "開くファイルを選択してください";
+            ofd.Multiselect = true;
+
             //ダイアログを表示する
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                //OKボタンがクリックされたとき、選択されたファイル名を表示する
-                textBoxData.Text = ofd.FileName;
+                //OKボタンがクリックされたとき、選択されたファイル名を表示する。
+                //複数選択の場合はコンマ区切り
+                textBoxData.Text = "";
+                int cnt = 0;
+                foreach (string element in ofd.FileNames)
+                {
+                    if(cnt == 0)
+                    {
+                        textBoxData.Text = element;
+                    }
+                    else
+                    {
+                        textBoxData.Text += ",";
+                        textBoxData.Text += element;
+                    }
+                    cnt++;
+                }
+
             }
         }
 
